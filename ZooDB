@@ -1,0 +1,52 @@
+Create Database ZooDB
+
+Create Table AnimalType (animal_type_id int primary key not null,
+						type_name Varchar(100) not null,
+						description varchar(max));
+
+Create Table Speciesinfo (species_info_id int primary key not null, 
+						 common_name Varchar(100) not null,
+						 scienfic_name varchar(100),
+						 habitat varchar(max),
+						 diet varchar(max),
+						 conservation_status varchar(100));
+
+Create Table Enclosure ( enclosure_id int primary key not null,
+					   name varchar(100)not null,
+					   location varchar(200));
+
+Create Table Keeper ( Keeper_id int primary key not null,
+					name varchar (100) not null,
+					phone varchar (50),
+					email varchar(100))
+
+Create Table EnclosureKeeper ( enclosure_id int not null,
+							 Keeper_id int not null,
+							 primary key (enclosure_id,Keeper_id),
+							 FOREIGN KEY (enclosure_id) REFERENCES Enclosure(enclosure_id),
+							 FOREIGN KEY (keeper_id) REFERENCES Keeper(keeper_id)); 
+
+Create Table Food ( Food_id int primary key not null, name varchar (100) not null,type varchar (100),unit varchar(50))
+
+Create Table Animal (Animal_id int primary key not null
+					,name varchar (100) not null,
+					gender varchar (10),
+					birth_date date,
+					enclosure_id int
+					,animal_type_id int
+					,species_info_id int
+					, FOREIGN KEY (enclosure_id) REFERENCES Enclosure(enclosure_id),
+					FOREIGN KEY (Animal_type_id) REFERENCES AnimalType (animal_type_id)
+					,FOREIGN KEY (species_info_id) REFERENCES speciesinfo (species_info_id));
+
+Create Table FeedingSchedule (feeding_id int primary key not null,
+			 animal_id int not null,
+			 food_id int not null,
+			 amount Decimal(10,2),
+			 feeding_date date,
+			 feeding_time time,
+			 keeper_id int,
+			 FOREIGN KEY (animal_id) REFERENCES Animal (animal_id),
+			 FOREIGN KEY (food_id) REFERENCES food (food_id),
+			 FOREIGN KEY (keeper_id) REFERENCES keeper(keeper_id));
+
